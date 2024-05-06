@@ -6,7 +6,8 @@
     "build": "pcf-scripts build",
     "clean": "pcf-scripts clean",
     "rebuild": "pcf-scripts rebuild",
-    "start": "pcf-scripts start"
+    "start": "pcf-scripts start",
+    "lint": "eslint --fix --ext .js,.jsx ."
   },
   "dependencies": {
     "@fluentui/react": "^8.27.1",
@@ -24,6 +25,9 @@
     "react-swipeable": "^6.1.2"
   },
   "devDependencies": {
+    "@microsoft/eslint-plugin-power-apps": "^0.2.33",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
     "pcf-scripts": "^1.8.6",
     "pcf-start": "^1.8.6",
     "typescript": "^4.3.5"
