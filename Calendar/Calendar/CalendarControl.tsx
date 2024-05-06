@@ -74,7 +74,7 @@ React.useEffect(()=>{
         }
 
         var dataSet = props.pcfContext.parameters.calendarDataSet;
-        //console.log(`asyncCalendarData: dataSet.sortedRecordIds.length: ${dataSet.sortedRecordIds.length}`)
+        console.log(`asyncCalendarData: dataSet.sortedRecordIds.length: ${dataSet.sortedRecordIds.length}`)
         if (dataSet.loading === false)
         {
             setCalendarData(await getCalendarData(props.pcfContext, keys));            
