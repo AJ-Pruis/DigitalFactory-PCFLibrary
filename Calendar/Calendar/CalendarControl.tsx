@@ -73,14 +73,11 @@ React.useEffect(()=>{
             keys = await getKeys(props.pcfContext);
         }
 
-        props.pcfContext.parameters.calendarDataSet.refresh();
-        var dataSet = props.pcfContext.parameters.calendarDataSet;
-        console.log(`asyncCalendarData: dataSet.sortedRecordIds.length: ${dataSet.sortedRecordIds.length}`);
-        console.log(`test updates`);
-        if (dataSet.loading === false)
-        {
+        console.log(`asyncCalendarData: dataSet.sortedRecordIds.length: ${props.pcfContext.parameters.calendarDataSet.sortedRecordIds.length}`);
+        //if (dataSet.loading === false)
+        //{
             setCalendarData(await getCalendarData(props.pcfContext, keys));            
-        }
+        //}
     }        
     asyncCalendarData();
 },
