@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-var-requires */
 /*
  * @Author: richard.wilson 
  * @Date: 2020-05-09 07:38:02 
@@ -13,8 +18,6 @@ import GetMessages from './Translations'
 import * as moment from 'moment'
 import * as lcid from 'lcid';
 import * as Color from 'color'
-import {MobileToolbar, ToolbarColor} from './MobileToolbar'
-import { inherits } from 'util';
 var CustomWorkWeek = require('./MyWorkWeek');
 var isHexColor = require('is-hexcolor');
 
@@ -43,9 +46,6 @@ const calendarViews = getCalendarViews(props.pcfContext);
 const weekStartDay = props.pcfContext.parameters.calendarWeekStart?.raw || null;
 const calendarCulture = getISOLanguage(props.pcfContext);
 
-ToolbarColor.textColor = calendarTextColor;
-ToolbarColor.borderColor = calendarBorderColor;
-
 //set our moment to the current calendar culture for use of it outside the calendar.
 const localizer = momentLocalizer(moment);
 //customize the momentLocalizer to utilize our week start day property.
@@ -73,8 +73,10 @@ React.useEffect(()=>{
             keys = await getKeys(props.pcfContext);
         }
 
+        props.pcfContext.parameters.calendarDataSet.refresh();
         var dataSet = props.pcfContext.parameters.calendarDataSet;
-        console.log(`asyncCalendarData: dataSet.sortedRecordIds.length: ${dataSet.sortedRecordIds.length}`)
+        console.log(`asyncCalendarData: dataSet.sortedRecordIds.length: ${dataSet.sortedRecordIds.length}`);
+        console.log(`test updates`);
         if (dataSet.loading === false)
         {
             setCalendarData(await getCalendarData(props.pcfContext, keys));            
@@ -109,8 +111,6 @@ React.useEffect(()=>{
 },[calendarDate, calendarView])
 
 React.useEffect(()=>{
-    ToolbarColor.textColor = calendarTextColor;
-    ToolbarColor.borderColor = calendarBorderColor;
     let styleTag = document.getElementById('rbc-calendar-theme-style');
     if (styleTag){
         styleTag.innerHTML = generateThemeCSS();
@@ -398,7 +398,7 @@ async function getKeys(pcfContext: ComponentFramework.Context<IInputs>) : Promis
     if (pcfContext.mode.allocatedHeight === -1 && resource && resourceGetAllInModel)
     {
         //get the resource entity name
-        ///@ts-ignore
+        ///@ts-expect-error some error
         let eventMeta = await pcfContext.utils.getEntityMetadata(pcfContext.mode.contextInfo.entityTypeName, [resource]);
         resourceEtn = eventMeta.Attributes.getByName(resource).Targets[0];        
         //get the resource primary name and id fields for resource.

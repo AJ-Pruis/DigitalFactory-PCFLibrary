@@ -1,11 +1,9 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-var */
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import DataSetInterfaces = ComponentFramework.PropertyHelper.DataSetApi;
-type DataSet = ComponentFramework.PropertyTypes.DataSet;
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {CalendarControl, IProps} from "./CalendarControl"
-import * as Color from 'color'
-var isHexColor = require('is-hexcolor');
 
 export class Calendar implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -77,7 +75,7 @@ export class Calendar implements ComponentFramework.StandardControl<IInputs, IOu
 			this._container.style.height = `${(this._context.mode.allocatedHeight - 25).toString()}px`;
 		}
 		else{
-			///@ts-ignore
+			///@ts-expect-error some error
 			this._container.style.height = this._context.mode?.rowSpan ? `${(this._context.mode.rowSpan * 1.5).toString()}em` : "100%"
 		}		
 		this._container.style.zIndex = "0";
@@ -128,6 +126,7 @@ export class Calendar implements ComponentFramework.StandardControl<IInputs, IOu
 		this._props.pcfContext = context;
 		//console.log(`updateView: dataSet.sortedRecordIds.length:  ${context.parameters.calendarDataSet.sortedRecordIds.length}`)
 
+		
 		ReactDOM.render(
 			React.createElement(
 				CalendarControl, this._props
