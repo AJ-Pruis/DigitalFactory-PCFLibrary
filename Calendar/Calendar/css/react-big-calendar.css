@@ -18,6 +18,7 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-calendar {
   box-sizing: border-box;
+  border: solid 0px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -65,20 +66,20 @@ button.rbc-input::-moz-focus-inner {
   flex: 1 0 0%;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 3px;
+  padding: 5px 5px;
   text-align: center;
-  vertical-align: middle;
+  vertical-align: left;
   font-weight: bold;
   font-size: 90%;
   min-height: 0;
   border-bottom: 1px solid; /*  #DDDDDD;  */
 }
   .rbc-header + .rbc-header {
-    border-left: 1px solid; /*  #DDDDDD;  */
+    border-left: 0px solid; /*  #DDDDDD;  */
   }
   .rbc-rtl .rbc-header + .rbc-header {
     border-left-width: 0;
-    border-right: 1px solid; /*  #DDDDDD;  */
+    border-right: 0px solid; /*  #DDDDDD;  */
   }
   .rbc-header > a, .rbc-header > a:active, .rbc-header > a:visited {
     color: inherit;
@@ -117,28 +118,28 @@ button.rbc-input::-moz-focus-inner {
     vertical-align: middle;
     background: none;
     background-image: none;
-    border: 1px solid;/* #ccc; */
-    padding: .3rem .5rem;
+    border: 0px solid;/* #ccc; */
+    padding: .5rem .8rem;
     /* border-radius: 4px; */
     line-height: normal;
     white-space: nowrap; }
     .rbc-toolbar button:active, .rbc-toolbar button.rbc-active {
       background-image: none;
-      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
       /* background-color: #e6e6e6; */
-      border-color: inherit; /* #adadad; */ }
+      border-color: inherit; /* #adadad; */ 
+      border-bottom: 2px solid #175499; }
     .rbc-toolbar button:active:hover, .rbc-toolbar button:active:focus, .rbc-toolbar button.rbc-active:hover, .rbc-toolbar button.rbc-active:focus {
         /* color: #373a3c; */
         /* background-color: #d4d4d4; */
-        border-color:inherit; /* #8c8c8c; */ }
+        /* border-color:inherit; /* #8c8c8c; */ }
     .rbc-toolbar button:focus {
       /* color: #373a3c; */
       /* background-color: #e6e6e6; */
-      border-color: inherit; /*#adadad;*/ }
+      /* border-color: inherit; /*#adadad;*/ }
     .rbc-toolbar button:hover {
       /* color: #373a3c; */
       /* background-color: #e6e6e6; */
-      border-color: inherit; /* #adadad; */ }
+      /* border-color: inherit; /* #adadad; */ }
 
 .rbc-btn-group {
   display: inline-block;
@@ -158,7 +159,9 @@ button.rbc-input::-moz-focus-inner {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0; }
   .rbc-btn-group > button:not(:first-child):not(:last-child) {
-    border-radius: 0; }
+    border-radius: 0;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd; }
   .rbc-btn-group button + button {
     margin-left: -1px; }
   .rbc-rtl .rbc-btn-group button + button {
@@ -175,19 +178,24 @@ button.rbc-input::-moz-focus-inner {
   box-sizing: border-box;
   box-shadow: none;
   margin: 0;
-  padding: 2px 5px;
+  padding: 5px 5px;
   /* background-color: #3174ad; */
   /* transition: 0.25s; */
-  /* border-radius: 5px; */
+  border-radius: 4px;
+  border-left: 4px solid;
   color: #fff;
   cursor: pointer;
   width: 100%;
-  text-align: left; }
+  text-align: left; 
+  font-weight: 500; }
   .rbc-slot-selecting .rbc-event {
     cursor: inherit;
     pointer-events: none; }
   .rbc-event.rbc-selected {
     background-color: #265985; 
+  }
+  .rbc-event:hover {
+    background-color: #91d0ffAA !important;
   }
 
 .rbc-event-label {
@@ -214,7 +222,8 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-row {
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+}
 
 .rbc-row-segment {
   padding: 0 1px 1px 1px; }
@@ -240,7 +249,7 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-month-view {
   position: relative;
-  border: 1px solid; /* #DDD; */
+  border: 0px solid; /* #DDD; */
   display: flex;
   flex-direction: column;
   flex: 1 0 0;
@@ -268,11 +277,11 @@ button.rbc-input::-moz-focus-inner {
 .rbc-date-cell {
   flex: 1 1 0;
   min-width: 0;
-  padding-right: 5px;
-  text-align: right; }
+  padding-left: 5px;
+  text-align: left; }
   .rbc-date-cell.rbc-now {
     font-weight: bold; 
-    font-style: italic;
+    /* font-style: italic; */
   }
   .rbc-date-cell > a, .rbc-date-cell > a:active, .rbc-date-cell > a:visited {
     color: inherit;
@@ -287,10 +296,13 @@ button.rbc-input::-moz-focus-inner {
 .rbc-day-bg {
   flex: 1 0 0%; }
   .rbc-day-bg + .rbc-day-bg {
-    border-left: 1px solid;/* #DDD; */ }
+    border-left: 0px solid;/* #DDD; */ }
   .rbc-rtl .rbc-day-bg + .rbc-day-bg {
     border-left-width: 0;
-    border-right: 1px solid;/* #DDD; */ }
+    border-right: 0px solid;/* #DDD; */ }
+  .rbc-day-bg.rbc-today{
+    border-top: 3px solid #175499 !important;
+  }
 
 .rbc-overlay {
   position: absolute;

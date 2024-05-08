@@ -55,7 +55,6 @@ export class Calendar implements ComponentFramework.StandardControl<IInputs, IOu
 		this._selectedRecordId = '';
 		this._actionRecordSelected = false;
 		this._actionSlotSelected = false;
-
 		this._updateFromOutput = false;
 
 		this._props = {
@@ -91,48 +90,31 @@ export class Calendar implements ComponentFramework.StandardControl<IInputs, IOu
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void
 	{	
-		//PERFORMANCE: If the updateView was called from the getOuputs function then do not refresh.
-		// Otherwise you will end up calling the render method additional times in canvas app
-		// when it is not needed.
-		if (this._updateFromOutput){
-			this._updateFromOutput = false;
-			return;
+		if(!context.parameters.calendarDataSet.loading)
+		{
+			if(context.parameters.calendarDataSet.paging != null && context.parameters.calendarDataSet.paging.hasNextPage)
+			{
+				context.parameters.calendarDataSet.paging.setPageSize(5000);
+				context.parameters.calendarDataSet.paging.loadNextPage();
+			}
+			
+			//CANVAS ONLY
+			if (context.mode.allocatedHeight !== -1) {
+				//if we are in a canvas app we need to resize the map to make sure it fits inside the allocatedHeight
+				this._container.style.height = `${(context.mode.allocatedHeight - 25).toString()}px`;
+			}				
+
+			this._props.pcfContext = context;
+			console.log(`updateView: dataSet.sortedRecordIds.length:  ${context.parameters.calendarDataSet.sortedRecordIds.length}`)
+
+			// render control
+			ReactDOM.render(
+				React.createElement(
+					CalendarControl, this._props
+				), 
+				this._container
+			);	
 		}
-
-		var dataSet = context.parameters.calendarDataSet
-		
-		if (dataSet.loading) return;
-
-		//CANVAS ONLY
-		if (context.mode.allocatedHeight !== -1) {
-			//if we are in a canvas app we need to resize the map to make sure it fits inside the allocatedHeight
-			this._container.style.height = `${(context.mode.allocatedHeight - 25).toString()}px`;
-
-			//Setting the page size in a Canvas app works on the first load of the component.  If you navigate
-			// away from the page on which the component is located though the paging get reset to 25 when you
-			// navigate back.  In order to fix this we need to reset the paging to the count of the records that
-			// will come back and do a reset on the paging.  I believe this is all due to a MS bug.
-			dataSet.paging.setPageSize(dataSet.paging.totalResultCount);
-		}				
-
-		//MODEL ONLY
-		if (context.mode.allocatedHeight === -1 && dataSet.paging.hasNextPage) {
-			//if data set has additional pages retrieve them before running anything else
-			// do not do this for canvas apps since the loadNextPage is currently broken
-			dataSet.paging.loadNextPage();
-			return;
-		}
-		
-		this._props.pcfContext = context;
-		//console.log(`updateView: dataSet.sortedRecordIds.length:  ${context.parameters.calendarDataSet.sortedRecordIds.length}`)
-
-		
-		ReactDOM.render(
-			React.createElement(
-				CalendarControl, this._props
-			), 
-			this._container
-		);	
 	}
 
 	public onClickSelectedRecord(recordId: string)

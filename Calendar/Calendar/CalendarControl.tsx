@@ -6,8 +6,8 @@
 /*
  * @Author: richard.wilson 
  * @Date: 2020-05-09 07:38:02 
- * @Last Modified by: richard.wilson
- * @Last Modified time: 2021-03-05 18:00:21
+ * @Last Modified by: Aerhue.Pruis
+ * @Last Modified time: 2024-05-07 20:00:21
  */
 
 import * as React from 'react';
@@ -67,17 +67,16 @@ const calendarRef = React.useRef(null);
 //sets the keys and calendar data when the control is loaded or the calendarDataSet changes.
 React.useEffect(()=>{
     async function asyncCalendarData(){
-        var keys = calendarData.keys;
-        if (!keys)
+        //console.log(`asyncCalendarData: dataSet.sortedRecordIds.length: ${props.pcfContext.parameters.calendarDataSet.sortedRecordIds.length}`);
+        if (!props.pcfContext.parameters.calendarDataSet.loading)
         {
-            keys = await getKeys(props.pcfContext);
-        }
-
-        console.log(`asyncCalendarData: dataSet.sortedRecordIds.length: ${props.pcfContext.parameters.calendarDataSet.sortedRecordIds.length}`);
-        //if (dataSet.loading === false)
-        //{
+            var keys = calendarData.keys;
+            if (!keys)
+            {
+                keys = await getKeys(props.pcfContext);
+            }
             setCalendarData(await getCalendarData(props.pcfContext, keys));            
-        //}
+        }
     }        
     asyncCalendarData();
 },
@@ -118,34 +117,27 @@ React.useEffect(()=>{
 
 const generateThemeCSS = () : string =>{
     return `
-    .rbc-calendar, 
-    .rbc-toolbar button, 
+    .rbc-calendar,  
     .rbc-agenda-date-cell,
     .rbc-agenda-time-cell
     {
         color: ${calendarTextColor};
     }
 
-    .rbc-toolbar button:active, .rbc-toolbar button.rbc-active, .rbc-toolbar button:focus, .rbc-toolbar button:hover {
-        background-color: ${calendarTextColor.fade(.7)};
+    .rbc-toolbar button:active, .rbc-toolbar button.rbc-active, .rbc-toolbar button:hover {
+        background-color: ${calendarTextColor.fade(.95)};
     }
 
-    .rbc-toolbar button:active:hover, .rbc-toolbar button:active:focus, .rbc-toolbar button.rbc-active:hover, .rbc-toolbar button.rbc-active:focus {
-        background-color: ${calendarTextColor.fade(.6)};
-    }
-
-    .rbc-toolbar button:active:hover, .rbc-toolbar button:active:focus, .rbc-toolbar button.rbc-active:hover, .rbc-toolbar button.rbc-active:focus,
-    rbc-toolbar button:focus,
-    .rbc-toolbar button:hover {
-        color: ${calendarTextColor.grayscale()} !important;
+    .rbc-toolbar button:active:hover, .rbc-toolbar button.rbc-active:hover {
+        background-color: ${calendarTextColor.fade(.98)};
     }
 
     .rbc-off-range-bg {
-        background-color: ${calendarTextColor.fade(.8)} !important
+        background-color: ${calendarTextColor.fade(.95)} !important
     }
 
     .rbc-off-range {
-        color: ${calendarTextColor.fade(.6)}
+        color: ${calendarTextColor.fade(.5)}
     }
 
     .rbc-show-more {
@@ -164,9 +156,8 @@ const generateThemeCSS = () : string =>{
     .rbc-header,
     .rbc-header + .rbc-header,
     .rbc-rtl .rbc-header + .rbc-header,
-    .rbc-month-view,
     .rbc-month-row,
-    .rbc-day-bg + .rbc-day-bg,
+    .rbc-day-bg,
     .rbc-rtl .rbc-day-bg + .rbc-day-bg,
     .rbc-agenda-view table.rbc-agenda-table,
     .rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td,
@@ -187,16 +178,14 @@ const generateThemeCSS = () : string =>{
     .rbc-time-header-content > .rbc-row.rbc-row-resource,
     .rbc-time-content,
     .rbc-time-content > * + * > *,
-    .rbc-rtl .rbc-time-content > * + * > *,
-    .rbc-toolbar button
+    .rbc-rtl .rbc-time-content > * + * > *
     {
         border-color: ${calendarBorderColor} !important;
     }
 
-    .rbc-event:focus,
-    .rbc-toolbar button:focus
+    .rbc-month-view
     {
-        outline: 5px auto ${calendarBorderColor};
+        border-color: #ffffff
     }
 
     .rbc-day-slot .rbc-time-slot {
@@ -268,9 +257,9 @@ const _onCalendarChange = () =>
 const eventPropsGetter = (event: IEvent) => {
     return {
         style: {
-            backgroundColor: event.color || eventDefaultBackgroundColor.toString(),
-            color: Color(event.color || eventDefaultBackgroundColor).isDark() ? '#fff' : "#000",
-            borderColor: calendarBorderColor.toString()
+            backgroundColor: event.color || '#BDE3FFAA',
+            color: event.color ? (Color(event.color).isDark() ? '#fff' : "#000") : '#0D3159',
+            borderColor: '#175499'
         }
     }
 }
