@@ -397,14 +397,16 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-timeslot-group {
   border-bottom: 1px solid;/* #DDD; */;
-  min-height: 40px;
+  min-height: 80px;
   display: flex;
   flex-flow: column nowrap; }
 
 .rbc-time-gutter,
 .rbc-header-gutter {
   flex: none; }
-
+  .rbc-time-gutter.rbc-time-column > * {
+    border-bottom: 0px solid;
+  }
 .rbc-label {
   padding: 0 5px; }
 
@@ -421,7 +423,7 @@ button.rbc-input::-moz-focus-inner {
       left: 10px;
       right: 0; }
   .rbc-day-slot .rbc-event {
-    border: 1px solid #999;
+    border: 0px solid #999;
     display: flex;
     max-height: 100%;
     min-height: 20px;
@@ -440,8 +442,8 @@ button.rbc-input::-moz-focus-inner {
     line-height: 1;
     height: 100%;
     min-height: 1em; }
-  .rbc-day-slot .rbc-time-slot {
-    border-top: 1px solid; /* #f7f7f7; */ }
+  .rbc-day-slot .rbc-time-slot:last-child {
+    border-top: 1px dashed; /* #f7f7f7; */ }
 
 .rbc-time-view .rbc-time-header-gutter {
   /* To fix issue in Canvas app we will set the width manually */
